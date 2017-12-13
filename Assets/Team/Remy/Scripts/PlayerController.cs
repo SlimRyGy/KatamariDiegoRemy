@@ -10,7 +10,6 @@ public class PlayerController : DualBehaviour
 
     public float m_movementSpeed;
 
-
     #endregion
 
     #region Public void
@@ -25,23 +24,22 @@ public class PlayerController : DualBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
-    void Start () 
+    private void FixedUpdate()
     {
-		
-	}
-	
-	void Update () 
-    {
-		
-	}
+        Move();
+    }
 
     #endregion
 
     #region Class Methods
-    
+
     private void Move()
     {
-        m_rigidbody.AddForce(new Vector3());
+        float m_moveHorizontal  = Input.GetAxisRaw("Horizontal");
+        float m_moveVertical    = Input.GetAxisRaw("Vertical");
+        Vector3 m_movement      = new Vector3(m_moveHorizontal, 0.0f, m_moveVertical);
+
+        m_rigidbody.AddForce(m_movement * m_movementSpeed, ForceMode.Force);
     }
     
     #endregion
@@ -53,7 +51,7 @@ public class PlayerController : DualBehaviour
     #region Private and Protected Members
 
     private Rigidbody m_rigidbody;
-
+    
     #endregion
 
 }
