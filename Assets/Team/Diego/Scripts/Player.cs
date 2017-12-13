@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     {
         // TODO mettre les collision entre Layer Player et Level à false
         m_sphere_colider = GetComponent<SphereCollider>();
+        m_transform = this.transform;
+
     }
     void Start ()
     {
@@ -25,11 +28,11 @@ public class Player : MonoBehaviour
 
     void Update ()
     {
-        	
+        AttractObject();
     }
     void OnCollisionEnter(Collision _col)
     {
-        AttractObject(_col.gameObject);
+        IsAttractObject(_col.gameObject);
         
     }
     #endregion
@@ -37,10 +40,23 @@ public class Player : MonoBehaviour
     #region Tools Debug and Utility
     //ne pas détecter le sol
     // detecter le type d'objet
-    private void AttractObject(GameObject _go) {
-        if (_go.tag == "AttractiveObject")
+    private void IsAttractObject(GameObject _go) {
+        if (_go.tag == "AttractiveObject" && _go.transform.localScale.y<m_transform.localScale.y)
         {
-            Debug.Log("collision obj");
+            if (!m_ObjectsList.Contains(_go)) { 
+                m_ObjectsList.Add(_go);
+                _go.transform.parent = m_transform;
+
+                
+            }
+
+        }
+    }
+
+    private void AttractObject()
+    {
+        foreach( GameObject go in m_ObjectsList) {
+           // go.transform.Translate(m_transform.position);
         }
     }
     #endregion
@@ -48,5 +64,13 @@ public class Player : MonoBehaviour
     #region Private and Protected Members
     [SerializeField]
     private SphereCollider m_sphere_colider;
+    [SerializeField]
+    private List<GameObject> m_ObjectsList;
+    [SerializeField]
+    private Transform m_transform;
+
     #endregion
+    //Pour plus tard m_transform.Rotate(Vector3,Space.World);
+
+
 }
