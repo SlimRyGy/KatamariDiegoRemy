@@ -28,11 +28,11 @@ public class Player : MonoBehaviour
 
     void Update ()
     {
-        AttractObject();
+        ScalePlayer();
     }
     void OnCollisionEnter(Collision _col)
     {
-        IsAttractObject(_col.gameObject);
+        IsAttractObject(_col.transform);
         
     }
     #endregion
@@ -40,32 +40,35 @@ public class Player : MonoBehaviour
     #region Tools Debug and Utility
     //ne pas détecter le sol
     // detecter le type d'objet
-    private void IsAttractObject(GameObject _go) {
-        if (_go.tag == "AttractiveObject" && _go.transform.localScale.y<m_transform.localScale.y)
+    private void IsAttractObject(Transform _t)
+    {
+        if (_t.tag == "AttractiveObject" && _t.transform.localScale.y<m_transform.localScale.y)// a ameliorer
         {
-            if (!m_ObjectsList.Contains(_go)) { 
-                m_ObjectsList.Add(_go);
-                _go.transform.parent = m_transform;
-
-                
+            if (!m_ObjectsList.Contains(_t)) { 
+                m_ObjectsList.Add(_t);
+                _t.parent = m_transform;
+                Destroy(_t.GetComponent<Rigidbody>());
+                Destroy(_t.GetComponent<Collider>());
             }
 
         }
     }
-
-    private void AttractObject()
+    private void ScalePlayer()
     {
-        foreach( GameObject go in m_ObjectsList) {
-           // go.transform.Translate(m_transform.position);
+        if (m_ObjectsList.Count == 1)
+        {
+            m_transform.localScale = (m_transform.localScale * 1.001f);
         }
+
     }
+    
     #endregion
 
     #region Private and Protected Members
     [SerializeField]
     private SphereCollider m_sphere_colider;
     [SerializeField]
-    private List<GameObject> m_ObjectsList;
+    private List<Transform> m_ObjectsList;
     [SerializeField]
     private Transform m_transform;
 
