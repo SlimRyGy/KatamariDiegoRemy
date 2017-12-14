@@ -11,7 +11,7 @@ public class CameraController : DualBehaviour
     public float m_deltaRotationNeg;
     public float m_deltaRotationPos;
     public Transform m_cube;
-    int angle = 0;
+    float angle = 0;
 
     #endregion
 
@@ -32,17 +32,20 @@ public class CameraController : DualBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //transform.position = (m_player.transform.position + m_offset) + Quaternion.Euler(0,-1,0);
-
-            angle--;
+            angle = angle - 0.1f;
+            float x = m_player.transform.localPosition.x + m_offset.x * Mathf.Cos(angle);
+            float y = m_player.transform.localPosition.y + m_offset.y * Mathf.Sin(angle);
+            
             Debug.Log(angle);
             // transform.localPosition = m_transform.position + m_offset;
-            transform.localRotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            transform.position = new Vector3(transform.position.x,x,y); 
+          //  transform.RotateAround(m_player.transform.localPosition,new Vector3(0,1,0), angle);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
             //transform.position = (m_player.transform.position + m_offset) + Quaternion.Euler(0,-1,0);
 
-            angle++;
+            angle = angle + 0.1f;
             Debug.Log(angle);
             transform.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
         }
