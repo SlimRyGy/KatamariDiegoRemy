@@ -13,6 +13,7 @@ public class CameraController : DualBehaviour
     public Transform m_cube;
     int angle = 0;
 
+    public Transform _affectedObject;
     #endregion
 
     #region Public void
@@ -23,7 +24,7 @@ public class CameraController : DualBehaviour
 
     void Start () 
     {
-        m_offset = transform.position - m_player.transform.position;
+        m_offset = _affectedObject.position - m_player.transform.position;
 	}
 
     private void Update()
@@ -35,8 +36,8 @@ public class CameraController : DualBehaviour
             
             angle--;
             Debug.Log(angle);
-           // transform.localPosition = m_transform.position + m_offset;
-            transform.localRotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+            // transform.localPosition = m_transform.position + m_offset;
+            _affectedObject.localRotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -44,7 +45,7 @@ public class CameraController : DualBehaviour
 
             angle++;
             Debug.Log(angle);
-            transform.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
+            _affectedObject.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)) { m_deltaRotationPos -= 1; }
        // m_cube.localRotation = Quaternion.Euler(new Vector3(0, m_deltaRotation, 0));
@@ -53,7 +54,7 @@ public class CameraController : DualBehaviour
 
     void LateUpdate () 
     {
-        transform.position = Vector3.Lerp( transform.position,m_player.transform.position + m_offset * (m_player.transform.localScale.x/2),0.1f);
+        _affectedObject.position = Vector3.Lerp(_affectedObject.position, m_player.transform.position,Time.deltaTime); //+ m_offset * (m_player.transform.localScale.x/2),0.1f);
 	}
 
     #endregion
