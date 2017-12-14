@@ -23,7 +23,7 @@ public class CameraController : DualBehaviour
 	
 	void LateUpdate () 
     {
-        transform.position = m_player.transform.position + m_offset * (m_player.transform.localScale.x);
+        transform.position = Vector3.Lerp( transform.position,m_player.transform.position + m_offset * (m_player.transform.localScale.x/2),0.1f);
 	}
 
     #endregion

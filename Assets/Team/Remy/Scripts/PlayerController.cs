@@ -35,9 +35,8 @@ public class PlayerController : DualBehaviour
 
     private void Move()
     {
-        float m_moveHorizontal  = Input.GetAxisRaw("Horizontal");
         float m_moveVertical    = Input.GetAxisRaw("Vertical");
-        Vector3 m_movement      = new Vector3(m_moveHorizontal, 0.0f, m_moveVertical);
+        Vector3 m_movement      = new Vector3(0.0f, 0.0f, m_moveVertical);
 
         m_rigidbody.AddForce(m_movement * m_movementSpeed, ForceMode.Force);
     }

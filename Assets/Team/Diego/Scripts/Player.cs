@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
@@ -14,24 +13,22 @@ public class Player : MonoBehaviour
     #endregion
 
     #region System
+
     private void Reset()
     {
-        // TODO mettre les collision entre Layer Player et Level à false
         m_sphere_colider = GetComponent<SphereCollider>();
         m_transform = this.transform;
-
     }
 
     void OnCollisionEnter(Collision _col)
     {
-        IsAttractObject(_col.transform);
-        
+        IsAttractObject(_col.transform);   
     }
+
     #endregion
 
     #region Tools Debug and Utility
-    //ne pas détecter le sol
-    // detecter le type d'objet
+
     private void IsAttractObject(Transform _t)
     {
         if (_t.tag == "AttractiveObject" && _t.transform.localScale.y<m_transform.localScale.y)// a ameliorer
@@ -48,9 +45,9 @@ public class Player : MonoBehaviour
     }
     private void ScalePlayer(Transform _t)
     {
-       // Vector3 v=_t.localScale;
+        Vector3 v=_t.lossyScale;
         m_transform.localScale += (_t.localScale * 0.2f);
-        //_t.localScale = _t.localScale ;
+        _t.localScale -= (_t.localScale * 0.1f);
     }
     
     #endregion
@@ -64,7 +61,4 @@ public class Player : MonoBehaviour
     private Transform m_transform;
 
     #endregion
-    //Pour plus tard m_transform.Rotate(Vector3,Space.World);
-
-
 }
