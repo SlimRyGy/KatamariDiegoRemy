@@ -46,7 +46,7 @@ public class PlayerController : DualBehaviour
 
         m_rigidbody.AddForce(camDirection * m_movementSpeed * m_moveVertical, ForceMode.Force);
 
-        m_rigidbody.AddForce(camDirectionRight * m_movementSpeed * m_moveHorizontal, ForceMode.Force);
+       // m_rigidbody.AddForce(camDirectionRight * m_movementSpeed * m_moveHorizontal, ForceMode.Force);
 
 
 

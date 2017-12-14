@@ -8,7 +8,10 @@ public class CameraController : DualBehaviour
 
     public GameObject m_player;
     public float m_deltaRotation;
+    public float m_deltaRotationNeg;
+    public float m_deltaRotationPos;
     public Transform m_cube;
+    int angle = 0;
 
     #endregion
 
@@ -25,9 +28,26 @@ public class CameraController : DualBehaviour
 
     private void Update()
     {
-        m_deltaRotation += Input.mouseScrollDelta.y;
+       // m_deltaRotation += Input.mouseScrollDelta.y;
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            //transform.position = (m_player.transform.position + m_offset) + Quaternion.Euler(0,-1,0);
+            
+            angle--;
+            Debug.Log(angle);
+           // transform.localPosition = m_transform.position + m_offset;
+            transform.localRotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            //transform.position = (m_player.transform.position + m_offset) + Quaternion.Euler(0,-1,0);
 
-        m_cube.localRotation = Quaternion.Euler(new Vector3(0, m_deltaRotation, 0));
+            angle++;
+            Debug.Log(angle);
+            transform.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) { m_deltaRotationPos -= 1; }
+       // m_cube.localRotation = Quaternion.Euler(new Vector3(0, m_deltaRotation, 0));
 
     }
 
