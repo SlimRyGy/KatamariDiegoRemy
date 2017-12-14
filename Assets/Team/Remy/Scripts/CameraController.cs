@@ -23,7 +23,7 @@ public class CameraController : DualBehaviour
 	
 	void LateUpdate () 
     {
-        transform.position = m_player.transform.position + m_offset;
+        transform.position = m_player.transform.position + m_offset * (m_player.transform.localScale.x);
 	}
 
     #endregion

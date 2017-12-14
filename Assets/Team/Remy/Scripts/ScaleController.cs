@@ -6,6 +6,9 @@ public class ScaleController : MonoBehaviour
 {
     #region Public Members
 
+    public float m_minCubeSize = 1;
+    public float m_maxCubeSize = 1;
+
     public float m_size;
     public Transform m_affectedObject;
 
@@ -17,15 +20,17 @@ public class ScaleController : MonoBehaviour
 
     #region System
 
-    private void OnValidate()
+    private void Start()
     {
-        m_affectedObject.localScale = new Vector3(m_size, m_size, m_size);
+        float randomSize = Random();
+        m_affectedObject.localScale = new Vector3(randomSize, randomSize, randomSize);
     }
 
-    void Start () 
+    float Random()
     {
-		
-	}
+        return UnityEngine.Random.Range(m_minCubeSize, m_maxCubeSize);
+    }
+
 	
 	void Update () 
     {

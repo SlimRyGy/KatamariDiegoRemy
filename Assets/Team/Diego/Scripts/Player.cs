@@ -21,15 +21,7 @@ public class Player : MonoBehaviour
         m_transform = this.transform;
 
     }
-    void Start ()
-    {
-        
-    }
 
-    void Update ()
-    {
-        ScalePlayer();
-    }
     void OnCollisionEnter(Collision _col)
     {
         IsAttractObject(_col.transform);
@@ -47,19 +39,18 @@ public class Player : MonoBehaviour
             if (!m_ObjectsList.Contains(_t)) { 
                 m_ObjectsList.Add(_t);
                 _t.parent = m_transform;
+                _t.GetComponent<Rigidbody>().mass = 0;
                 Destroy(_t.GetComponent<Rigidbody>());
                 Destroy(_t.GetComponent<Collider>());
+                ScalePlayer(_t);
             }
-
         }
     }
-    private void ScalePlayer()
+    private void ScalePlayer(Transform _t)
     {
-        if (m_ObjectsList.Count == 1)
-        {
-            m_transform.localScale = (m_transform.localScale * 1.001f);
-        }
-
+       // Vector3 v=_t.localScale;
+        m_transform.localScale += (_t.localScale * 0.2f);
+        //_t.localScale = _t.localScale ;
     }
     
     #endregion
